@@ -1,0 +1,248 @@
+;==========================================================
+;
+;
+;	███╗   ██╗ ██████╗ ███████╗██╗   ██╗
+;	████╗  ██║██╔═══██╗╚══███╔╝╚██╗ ██╔╝
+;	██╔██╗ ██║██║   ██║  ███╔╝  ╚████╔╝ 
+;	██║╚██╗██║██║   ██║ ███╔╝    ╚██╔╝  
+;	██║ ╚████║╚██████╔╝███████╗   ██║   
+;	╚═╝  ╚═══╝ ╚═════╝ ╚══════╝   ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   Polybar config by NOZY.
+;	
+;	https://github.com/geeknozy/npolybar
+;	https://geeknozy.github.io/
+;	
+;==========================================================
+
+; [colors]
+; background = #282828
+; background-alt =#d79921
+; foreground =  #ffffff
+; foreground-alt = #a89984
+; primary = #d79921
+; secondary = #ffffff
+; alert = #bd2c40
+
+[colors]
+background = ${xrdb:color0:#222}
+foreground = ${xrdb:color7:#222}
+foreground-alt = ${xrdb:color7:#222}
+primary = ${xrdb:color1:#222}
+secondary = ${xrdb:color2:#222}
+alert = ${xrdb:color3:#222}
+
+[bar/polybar-1]
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+
+width = 100%
+height = 20
+radius = 0.5
+fixed-center = center
+
+; background = ${colors.background}
+; foreground = ${colors.foreground}
+
+line-size = 1
+line-color = #00f2ff
+
+border-size = 0
+border-color = #02c5e0
+
+padding-left = 1
+padding-right = 1
+
+module-margin-left = 1
+module-margin-right = 1
+
+; font-0 = Sans:style=Mono:pixelsize=11;2
+font-0 = "Sans:size=11;2"
+font-1 = "CodeNewRoman Nerd Font:size=11;2"
+modules-left = ewmh xwindow ;music i3 
+; modules-center = 
+modules-right = redshift update pulseaudio date battery 
+; wired-network memory cpu are removed
+
+separator = ~
+separator-foreground = #fe8019
+tray-position = right
+tray-padding = 3
+; tray-background = #ffffff
+tray-detached = false
+tray-background = ${root.background}
+cursor-click = pointer
+eursor-scroll = ns-resize
+
+
+
+; [module/music]
+; type = custom/script
+; exec = ~/.config/polybar/script/music
+
+; label = %output:0:40:...%
+; format-prefix= "  "
+
+; label-foreground = ${colors.foreground}
+; label-background = ${colors.background}
+; label-padding = 1
+
+[module/update]
+type = custom/script
+exec = ~/polyscript/updatespacman.sh
+interval = 600
+click-right = pamac-manager &
+; format-padding = 1
+
+; [module/redshift]
+; type = custom/script
+; format-prefix = " "  
+; exec = source ~/polybar-redshift/env.sh && ~/polybar-redshift/redshift.sh temperature 
+; click-left = source ~/polybar-redshift/env.sh && ~/polybar-redshift/redshift.sh toggle 
+; scroll-up = source ~/polybar-redshift/env.sh && ~/polybar-redshift/redshift.sh increase
+; scroll-down = source ~/polybar-redshift/env.sh && ~/polybar-redshift/redshift.sh decrease
+; interval=0.5
+
+
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+format = <label>
+format-foreground = #ebdbb2
+
+
+[module/ewmh]
+type = internal/xworkspaces
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = true
+
+; Create click handler used to focus desktop
+; Default: true
+enable-click = true 
+
+; Create scroll handlers used to cycle desktops
+; Default: true
+enable-scroll = false
+
+format = <label-state>
+format-background = ${color.fg}
+
+label-empty-padding = 2
+label-active-padding = 2
+label-urgent-padding = 2
+label-occupied-padding = 2
+
+label-empty-foreground = ${color.fg-alt}
+label-active-foreground = ${color.fg}
+label-urgent-foreground = ${color.urgent}
+label-occupied-foreground = ${color.fg-alt}
+
+icon-0 = 1;
+icon-1 = 2;ﴬ
+icon-2 = 3;阮
+icon-3 = 4;
+; icon-4 = 5;♞
+icon-default = 
+
+label-active = %icon%
+; label-active-padding = 4
+label-occupied = %icon%
+; label-occupied-padding = 4
+
+
+; label-separator = |
+; label-separator-padding = 2
+; label-separator-foreground = #ffb52a
+
+[module/pulseaudio]
+type = internal/pulseaudio
+format-volume = <ramp-volume> <label-volume>
+
+label-volume = %percentage%%
+label-muted = 婢 0%
+label-muted-foreground = ${color.fg-alt}
+
+ramp-volume-0 = 奄
+ramp-volume-1 = 奔
+ramp-volume-2 = 墳
+ramp-volume-3 = 墳
+
+click-right = pavucontrol
+
+
+[module/date]
+; type = internal/date
+; interval = 1
+; date = %d/%m/%Y |
+; date-alt = " %d/%m/%Y |"
+; time = %I:%M:%p
+; time-alt = %H : %M : %S
+; format-prefix = "ﮮ "
+; ; format-background = #56B6C2
+; ; format-foreground = #000000
+; label = %date% %time%
+
+type = internal/date
+
+interval = 1.0
+
+time = %I:%M %p
+date = %a %d/%m
+
+format = <label>
+
+label =  %date%   %time%
+
+[module/battery]
+type = internal/battery
+
+full-at = 100
+
+battery = BAT0
+adapter = ACAD
+
+poll-interval = 2
+time-format = %H:%M
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+label-full =  100%
+label-charging = %percentage%%
+label-discharging = %percentage%%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+
+animation-charging-framerate = 750
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini

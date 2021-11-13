@@ -1,0 +1,11 @@
+#!/bin/bash
+
+artist=$(playerctl metadata artist)
+title=$(playerctl metadata title)
+if [[ $artist != "No player found" ]]
+then 
+    echo "$artist - $title"
+elif [[ $artist = "No player found" ]]
+then
+    echo""
+fi
